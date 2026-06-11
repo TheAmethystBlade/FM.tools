@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Tracker</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <main class="tool-workspace">
+        <div class="fluid-grid">
+            
+            <div class="panel">
+                <h2>Active Call Entry</h2>
+                <form id="call-form">
+                    
+                    <div class="form-group">
+                        <label for="client-name">Client Name</label>
+                        <input type="text" id="client-name" required placeholder="Enter name...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="call-type">Call Type</label>
+                        <select id="call-type" required>
+                            <option value="" disabled selected>Select category...</option>
+                            <option value="Consultation">Consultation</option>
+                            <option value="Support">Support Request</option>
+                            <option value="Sales">Sales Inquiry</option>
+                            <option value="Billing">Billing Issue</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="call-notes">Notes</label>
+                        <textarea id="call-notes" rows="4" placeholder="Key takeaways..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="follow-up">Follow Up</label>
+                        <select id="follow-up" required>
+                            <option value="None">None Required</option>
+                            <option value="EOD">End of Day</option>
+                            <option value="Tomorrow">Tomorrow</option>
+                            <option value="Next Week">Next Week</option>
+                            <option value="Next Month">Next Month</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn" style="margin-top: 1rem;">Log Communication</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>Communication Log</h2>
+                <div id="log-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <p style="text-align: center; margin-top: 2rem;">No calls logged yet.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../app.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
