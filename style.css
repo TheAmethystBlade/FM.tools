@@ -1,0 +1,157 @@
+/* --- 1. DESIGN TOKENS (Variables) --- */
+:root {
+    /* Light Mode (Default) */
+    --bg-base: #f4f4f5;
+    --bg-surface: #ffffff;
+    --bg-input: #ffffff;
+    
+    --brand-primary: #8b5cf6; /* Slightly darker purple for light mode contrast */
+    --brand-hover: #7c3aed;
+    
+    --text-primary: #171717;
+    --text-secondary: #52525b;
+    --border-color: #e4e4e7;
+
+    /* Sizing (Remains the same) */
+    --radius: 8px;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+}
+
+/* Dark Mode Override */
+[data-theme="dark"] {
+    --bg-base: #121212;
+    --bg-surface: #1e1e1e;
+    --bg-input: #2d2d2d;
+    
+    --brand-primary: #bb86fc; 
+    --brand-hover: #9965f4;
+    
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --border-color: #333333;
+}
+
+/* --- 2. BASE STYLES --- */
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- 3. LAYOUT & RESIZING --- */
+.tool-workspace {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    box-sizing: border-box;
+    flex: 1;
+}
+
+/* Items stay side-by-side until they have < 300px, then they stack */
+.fluid-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+/* --- 4. UI COMPONENTS --- */
+/* Card Elements */
+.panel {
+    background-color: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: var(--spacing-lg);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+}
+
+.panel h2, .panel h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--brand-primary);
+}
+
+/* Typography */
+p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Form Groups & Inputs */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: var(--spacing-md);
+}
+
+label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--brand-primary);
+}
+
+/* Buttons */
+.btn {
+    background-color: var(--brand-primary);
+    color: #121212;
+    border: none;
+    padding: 0.6rem var(--spacing-md);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: var(--brand-hover);
+}
+
+/* Specific Header Styles */
+#global-header {
+    background-color: var(--bg-surface);
+    padding: 1rem var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hamburger {
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    padding: 0;
+}
+
+#global-header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}

@@ -1,0 +1,14 @@
+[
+    {
+        "id": "call-tracker",
+        "title": "Call Tracker",
+        "path": "call-tracker/index.html",
+        "description": "Log communications, assign the Call Type, and set your Follow Up schedules."
+    },
+    {
+        "id": "example-tool",
+        "title": "Example Card Tool",
+        "path": "#",
+        "description": "A placeholder demonstrating the fluid grid."
+    }
+]
