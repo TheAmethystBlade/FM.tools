@@ -14,9 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <header id="global-header">
             <button class="hamburger">☰</button>
             <h1>My Tool Hub</h1>
-            <button id="theme-toggle" style="margin-left: auto; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-primary);">
-                ${savedTheme === 'dark' ? '☀️' : '🌙'}
-            </button>
+            <div class="theme-switch-wrapper">
+                <span class="theme-switch-label">Dark Mode</span>
+                <label class="theme-switch">
+                    <!-- If savedTheme is dark, check the box so the switch slides over -->
+                    <input type="checkbox" id="theme-toggle" ${savedTheme === 'dark' ? 'checked' : ''}>
+                    <span class="slider"></span>
+                </label>
+            </div>
         </header>
         <nav id="global-menu" style="display:none; padding: 1rem; background: var(--bg-surface); border-bottom: 1px solid var(--border-color);">
             <ul id="hamburger-menu-list" style="list-style: none; padding: 0; margin: 0; display: flex; gap: 1rem; flex-wrap: wrap;">
