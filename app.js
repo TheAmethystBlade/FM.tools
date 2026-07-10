@@ -1,15 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const scriptSrc = document.currentScript ? document.currentScript.src : '';
-    const isRoot = !scriptSrc.includes('/');
-    const rootPath = isRoot ? './' : '../';
+    // 1. The Path Fix: Look at the literal HTML attribute to determine folder depth
+    const scriptTag = document.querySelector('script[src$="app.js"]');
+    const rootPath = scriptTag ? scriptTag.getAttribute('src').replace('app.js', '') : '';
 
-    // 1. Check for saved theme preference BEFORE rendering to prevent flashing
+    // 2. Check for saved theme preference BEFORE rendering
     const savedTheme = localStorage.getItem('site-theme');
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
     }
 
-    // 2. Inject Universal Header & Nav (Now with a Theme Toggle)
+    // 3. Inject Universal Header & Nav
     const headerHTML = `
         <header id="global-header">
             <button class="hamburger">☰</button>
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.body.insertAdjacentHTML('afterbegin', headerHTML);
 
-    // 3. Theme Toggle Logic
+    // 4. Theme Toggle Logic
     const themeToggleBtn = document.getElementById('theme-toggle');
     themeToggleBtn.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -41,13 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 4. Toggle Menu
+    // 5. Toggle Menu
     const menu = document.getElementById('global-menu');
     document.querySelector('.hamburger').addEventListener('click', () => {
         menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
     });
 
-    // 5. Fetch Registry and Populate Menu & Homepage Grid
+    // 6. Fetch Registry and Populate Menu & Homepage Grid
     fetch(rootPath + 'tools.json')
         .then(response => response.json())
         .then(tools => {
@@ -55,10 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const mainGrid = document.getElementById('tools-grid'); 
 
             tools.forEach(tool => {
+                // Add to Hamburger Menu
                 const li = document.createElement('li');
                 li.innerHTML = `<a href="${rootPath}${tool.path}" style="color: var(--text-secondary); text-decoration: none;">${tool.title}</a>`;
                 menuContainer.appendChild(li);
 
+                // Add to Homepage Grid (only fires if we are actually on the homepage)
                 if (mainGrid) {
                     const card = document.createElement('div');
                     card.className = 'panel';
