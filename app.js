@@ -32,17 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.insertAdjacentHTML('afterbegin', headerHTML);
 
     // 4. Theme Toggle Logic
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        if (currentTheme === 'dark') {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('site-theme', 'light');
-            themeToggleBtn.textContent = '🌙';
-        } else {
+    const themeToggleInput = document.getElementById('theme-toggle');
+    themeToggleInput.addEventListener('change', (e) => {
+        // e.target.checked will be true if the user just slid it to the right
+        if (e.target.checked) {
             document.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('site-theme', 'dark');
-            themeToggleBtn.textContent = '☀️';
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('site-theme', 'light');
         }
     });
 
