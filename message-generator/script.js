@@ -54,16 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    function parseCSV(text) {
-        const lines = text.split('\n');
+function parseCSV(text) {
+        // Strip out any hidden Windows carriage returns before doing anything
+        const cleanText = text.replace(/\r/g, '');
+        const lines = cleanText.split('\n');
+        
         for (let i = 1; i < lines.length; i++) { 
             if (!lines[i].trim()) continue;
             
             const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             if (row.length >= 2) {
                 templates.push({
-                    title: row[0].replace(/^"|"$/g, '').trim(),
-                    template: row[1].replace(/^"|"$/g, '').trim()
+                    // The Fix: Trim away invisible spaces BEFORE removing the quotes
+                    title: row[0].trim().replace(/^"|"$/g, ''),
+                    template: row[1].trim().replace(/^"|"$/g, '')
                 });
             }
         }
