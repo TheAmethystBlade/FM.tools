@@ -7,9 +7,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let variables = new Set();
     let currentValues = {};
 
+    // --- NEW: Define Automatic Variables ---
+    const autoVariableNames = ['Current Date', 'Current Time', 'Day of Week', 'Greeting'];
+
+    function getAutoVariable(name) {
+        const now = new Date();
+        switch(name) {
+            case 'Current Date': 
+                return now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+            case 'Current Time': 
+                return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            case 'Day of Week': 
+                return now.toLocaleDateString([], { weekday: 'long' });
+            case 'Greeting': 
+                const hour = now.getHours();
+                if (hour < 12) return 'Good morning';
+                if (hour < 17) return 'Good afternoon';
+                return 'Good evening';
+            default: 
+                return null;
+        }
+    }
+
     // 1. Fetch and Parse the Selected CSV
     function loadCategory(filename) {
-        // Reset state before loading new file
         templates = [];
         variables.clear();
         currentValues = {};
@@ -33,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Helper: Parse CSV data
     function parseCSV(text) {
         const lines = text.split('\n');
         for (let i = 1; i < lines.length; i++) { 
@@ -49,24 +69,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Helper: Find all [Variables] in the templates
+    // Helper: Find all [Variables], but ignore the automatic ones
     function extractVariables() {
         const regex = /\[([^\]]+)\]/g;
         templates.forEach(t => {
             let match;
             while ((match = regex.exec(t.template)) !== null) {
-                variables.add(match[1]);
-                currentValues[match[1]] = ''; 
+                const varName = match[1];
+                // Only add to the user input list if it's NOT an auto-variable
+                if (!autoVariableNames.includes(varName)) {
+                    variables.add(varName);
+                    currentValues[varName] = ''; 
+                }
             }
         });
     }
 
-    // 2. Build the Form Dynamically
+    // 2. Build the Form Dynamically (Only for user inputs)
     function renderForm() {
         variablesForm.innerHTML = ''; 
         
         if (variables.size === 0) {
-            variablesForm.innerHTML = '<p style="color: var(--text-secondary);">No variables found in brackets [ ] in this spreadsheet.</p>';
+            variablesForm.innerHTML = '<p style="color: var(--text-secondary);">No manual variables needed for these templates.</p>';
             return;
         }
 
@@ -97,12 +121,12 @@ document.addEventListener('DOMContentLoaded', () => {
         messagesContainer.innerHTML = '';
         
         templates.forEach((t, index) => {
-            let processedText = t.template;
-            
-            variables.forEach(variableName => {
-                const replacement = currentValues[variableName] || `[${variableName}]`;
-                const regex = new RegExp(`\\[${variableName}\\]`, 'g');
-                processedText = processedText.replace(regex, replacement);
+            // Replace both auto-variables and manual user inputs
+            let processedText = t.template.replace(/\[([^\]]+)\]/g, (match, varName) => {
+                if (autoVariableNames.includes(varName)) {
+                    return getAutoVariable(varName);
+                }
+                return currentValues[varName] || `[${varName}]`;
             });
 
             const card = document.createElement('div');
