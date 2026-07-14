@@ -6,6 +6,12 @@
         "description": "Log communications, assign the Call Type, and set your Follow Up schedules."
     },
     {
+        "id": "message-generator",
+        "title": "Message Generator",
+        "path": "message-generator/index.html",
+        "description": "Instantly fill boilerplate responses using variables powered by a spreadsheet."
+    },
+    {
         "id": "example-tool",
         "title": "Example Card Tool",
         "path": "#",
