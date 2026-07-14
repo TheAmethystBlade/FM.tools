@@ -11,11 +11,23 @@
     <main class="tool-workspace">
         <div class="fluid-grid">
             
-            <!-- Left Side: Dynamic Variable Inputs -->
+            <!-- Left Side: Controls & Dynamic Inputs -->
             <div class="panel">
                 <h2>Variables</h2>
+                
+                <!-- Category Selector -->
+                <div class="form-group" style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color);">
+                    <label for="template-selector">Select Category</label>
+                    <select id="template-selector">
+                        <option value="general.csv">General Inquiries</option>
+                        <option value="sales.csv">Sales & Outreach</option>
+                        <option value="support.csv">Tech Support</option>
+                    </select>
+                </div>
+
+                <!-- Dynamic Variables Form -->
                 <form id="variables-form">
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Loading variables from spreadsheet...</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Loading variables...</p>
                 </form>
             </div>
 
