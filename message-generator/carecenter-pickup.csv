@@ -1,0 +1,6 @@
+Title,Template
+Spoke with Owner,Spoke with Owner and informed them of pets availability to be picked up.
+Left a Voice Message,Called Owner and left a voice message for them informing them that their pet was ready for pickup. Followed up with a text msg as well.
+"Left a Voice Message, No Text",Called Owner and left a voice message for them informing them that their pet was ready for pickup. Unable to follow up with a text at this time due to Google Voice issues.
+Was unable to leave a voice message,I was unable to leaves a voice message when calling but I sent a text with information required for the Owner to pickup.
+Talk Desk Message,Informing PP of pet being ready for pickup
