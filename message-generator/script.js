@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const templateSelector = document.getElementById('template-selector');
     const variablesForm = document.getElementById('variables-form');
     const messagesContainer = document.getElementById('messages-container');
     
@@ -6,27 +7,38 @@ document.addEventListener('DOMContentLoaded', () => {
     let variables = new Set();
     let currentValues = {};
 
-    // 1. Fetch and Parse the CSV Spreadsheet
-    fetch('templates.csv')
-        .then(response => response.text())
-        .then(csvText => {
-            parseCSV(csvText);
-            extractVariables();
-            renderForm();
-            renderMessages();
-        })
-        .catch(error => {
-            variablesForm.innerHTML = '<p>Error loading templates.csv. Ensure the file exists.</p>';
-            console.error('Error:', error);
-        });
+    // 1. Fetch and Parse the Selected CSV
+    function loadCategory(filename) {
+        // Reset state before loading new file
+        templates = [];
+        variables.clear();
+        currentValues = {};
+        variablesForm.innerHTML = '<p style="color: var(--text-secondary); font-size: 0.9rem;">Loading...</p>';
+        messagesContainer.innerHTML = '';
 
-    // Helper: Parse CSV data (handles commas inside spreadsheet cells)
+        fetch(filename)
+            .then(response => {
+                if (!response.ok) throw new Error('File not found');
+                return response.text();
+            })
+            .then(csvText => {
+                parseCSV(csvText);
+                extractVariables();
+                renderForm();
+                renderMessages();
+            })
+            .catch(error => {
+                variablesForm.innerHTML = `<p style="color: #ef4444;">Error loading ${filename}. Ensure the file exists in the folder.</p>`;
+                console.error('Error:', error);
+            });
+    }
+
+    // Helper: Parse CSV data
     function parseCSV(text) {
         const lines = text.split('\n');
-        for (let i = 1; i < lines.length; i++) { // Skip header row
+        for (let i = 1; i < lines.length; i++) { 
             if (!lines[i].trim()) continue;
             
-            // Splits by comma, but ignores commas enclosed in quotes
             const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             if (row.length >= 2) {
                 templates.push({
@@ -44,17 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
             let match;
             while ((match = regex.exec(t.template)) !== null) {
                 variables.add(match[1]);
-                currentValues[match[1]] = ''; // Initialize blank
+                currentValues[match[1]] = ''; 
             }
         });
     }
 
     // 2. Build the Form Dynamically
     function renderForm() {
-        variablesForm.innerHTML = ''; // Clear loading text
+        variablesForm.innerHTML = ''; 
         
         if (variables.size === 0) {
-            variablesForm.innerHTML = '<p style="color: var(--text-secondary);">No variables found in brackets [ ] in the spreadsheet.</p>';
+            variablesForm.innerHTML = '<p style="color: var(--text-secondary);">No variables found in brackets [ ] in this spreadsheet.</p>';
             return;
         }
 
@@ -69,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             input.type = 'text';
             input.placeholder = `Enter ${variableName}...`;
             
-            // Listen for typing and update messages instantly
             input.addEventListener('input', (e) => {
                 currentValues[variableName] = e.target.value;
                 renderMessages();
@@ -81,14 +92,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Render the Messages with injected variables
+    // 3. Render the Messages
     function renderMessages() {
         messagesContainer.innerHTML = '';
         
         templates.forEach((t, index) => {
             let processedText = t.template;
             
-            // Replace [Variables] with typed text, or leave bracketed if empty
             variables.forEach(variableName => {
                 const replacement = currentValues[variableName] || `[${variableName}]`;
                 const regex = new RegExp(`\\[${variableName}\\]`, 'g');
@@ -121,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     const originalText = e.target.innerText;
                     e.target.innerText = 'Copied!';
-                    e.target.style.backgroundColor = '#10b981'; // Green success color
+                    e.target.style.backgroundColor = '#10b981';
                     e.target.style.color = '#ffffff';
                     
                     setTimeout(() => {
@@ -133,4 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // 4. Listen for Dropdown Changes
+    templateSelector.addEventListener('change', (e) => {
+        loadCategory(e.target.value);
+    });
+
+    // 5. Initial Load on Page Start
+    loadCategory(templateSelector.value);
 });
