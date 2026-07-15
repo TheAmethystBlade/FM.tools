@@ -5,8 +5,8 @@
     --bg-surface: #ffffff;
     --bg-input: #ffffff;
     
-    --brand-primary: #004f80; /* Slightly darker purple for light mode contrast */
-    --brand-hover: #003f66;
+    --brand-primary: #006eb3; /* Slightly darker purple for light mode contrast */
+    --brand-hover: #005e99;
     
     --text-primary: #171717;
     --text-secondary: #52525b;
@@ -25,8 +25,8 @@
     --bg-surface: #1e1e1e;
     --bg-input: #2d2d2d;
     
-    --brand-primary: #144e85; 
-    --brand-hover: #11416f;
+    --brand-primary: #1b69b1; 
+    --brand-hover: #175b9b;
     
     --text-primary: #e0e0e0;
     --text-secondary: #a0a0a0;
