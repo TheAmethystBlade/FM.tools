@@ -55,7 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 function parseCSV(text) {
-        // Strip out any hidden Windows carriage returns before doing anything
         const cleanText = text.replace(/\r/g, '');
         const lines = cleanText.split('\n');
         
@@ -65,9 +64,10 @@ function parseCSV(text) {
             const row = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             if (row.length >= 2) {
                 templates.push({
-                    // The Fix: Trim away invisible spaces BEFORE removing the quotes
                     title: row[0].trim().replace(/^"|"$/g, ''),
-                    template: row[1].trim().replace(/^"|"$/g, '')
+                    template: row[1].trim().replace(/^"|"$/g, ''),
+                    // Capture the 3rd column if it exists, otherwise store a blank string
+                    tags: row[2] ? row[2].trim().replace(/^"|"$/g, '') : ''
                 });
             }
         }
@@ -120,12 +120,11 @@ function parseCSV(text) {
         });
     }
 
-    // 3. Render the Messages
+// 3. Render the Messages
     function renderMessages() {
         messagesContainer.innerHTML = '';
         
         templates.forEach((t, index) => {
-            // Replace both auto-variables and manual user inputs
             let processedText = t.template.replace(/\[([^\]]+)\]/g, (match, varName) => {
                 if (autoVariableNames.includes(varName)) {
                     return getAutoVariable(varName);
@@ -139,11 +138,25 @@ function parseCSV(text) {
             card.style.borderRadius = 'var(--radius)';
             card.style.border = '1px solid var(--border-color)';
 
+            // --- NEW: Generate Tag Badges ---
+            let tagsHTML = '';
+            if (t.tags) {
+                // Split by comma, remove extra spaces, and filter out empty strings
+                const tagArray = t.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+                if (tagArray.length > 0) {
+                    tagsHTML = `<div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;">` +
+                        tagArray.map(tag => `<span style="font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; border: 1px solid var(--brand-primary); color: var(--text-primary); background: var(--bg-surface);">${tag}</span>`).join('') +
+                    `</div>`;
+                }
+            }
+
+            // Notice we adjust the bottom margin of the title row based on whether tags exist
             card.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: ${tagsHTML ? '0.3rem' : '0.75rem'};">
                     <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">${t.title}</h3>
                     <button class="btn copy-btn" data-index="${index}" style="width: auto; padding: 0.3rem 0.8rem; font-size: 0.85rem;">Copy</button>
                 </div>
+                ${tagsHTML}
                 <p style="margin: 0; white-space: pre-wrap; color: var(--text-primary);" id="msg-${index}">${processedText}</p>
             `;
             
