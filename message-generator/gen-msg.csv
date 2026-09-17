@@ -1,5 +1,5 @@
-Title,Template
+Title,Template,Tags
 Clipboard,[Copy-Paste Message]
-Owner Pickup Completion,"Owner picked up on [Current Date], Owner showed DL as proof of ID."
-Calling about Cremation Pricing,Owner was calling to get pricing and avalibility info for cremation
-Order Adjusted,Order Adjusted as per [Clinic Tech's Name] at the clinic
+Owner Pickup Completion,"Owner picked up on [Current Date], Owner showed DL as proof of ID.",PawseTrack
+Calling about Cremation Pricing,Owner was calling to get pricing and avalibility info for cremation,Talkdesk
+Order Adjusted,Order Adjusted as per [Clinic Tech's Name] at the clinic,PawseTrack
