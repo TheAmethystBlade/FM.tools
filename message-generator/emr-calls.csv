@@ -1,6 +1,8 @@
-Title,Template
-Spoke with the Owner,Called Owner and spoke with them regarding EMR and offering assistance as well as a reminder of the deadline -
-Left a Voice Message,Called Owner and left VM for them offering help and reminding them of deadline to make decisions
-Left a Second Voice Message,Followed up on first VM and reminded Owner of coming deadline for making their decisions
-Had to send an email,"Called Owner and was unable to leave a VM for them, Instead I sent a text offering help and reminding them of deadline to make decisions."
-Talk Desk Message,Following up on EMR Mandatory Owner Call
+Title,Template,Tags
+Spoke with the Owner,Called Owner and spoke with them regarding EMR and offering assistance as well as a reminder of the deadline.,PawseTrack
+Left a Voice Message,Called Owner and left VM for them offering help and reminding them of deadline to make decisions.,PawseTrack
+Left a Second Voice Message,Followed up on first VM and reminded Owner of coming deadline for making their decisions.,PawseTrack
+Had to send an text,"Called Owner and was unable to leave a VM for them, Instead I sent a text offering help and reminding them of deadline to make decisions.",PawseTrack
+Talk Desk Message,Following up on EMR Mandatory Owner Call,Talkdesk
+EMR Initial Text,"Hi, this is Fond Memories texting you today about your pet [Pet's Name], we just wanted to let you know that the deadline to submit your wishes for your pets cremation is coming up soon and we still have yet to receive your final wishes. If you're having any trouble accessing the website or submitting those decisions to us, please give us a call at 281-919-1188 and would be happy to assist you. If you're not having any trouble, we would like to remind you that the decision period does close on [Decision Date].",Text
+EMR Follow Up Text,"Hi, this is Fond Memories texting you again about your pet [Pet's Name], we just wanted to remind you that the deadline to submit your wishes for your pets cremation is coming up soon and we still have yet to receive your final wishes. If you're in need of assistance, please give us a call at 281-919-1188 and would be happy to help. If you're not having any trouble, we would like to remind you that the decision period does close on [Decision Date].",Text
