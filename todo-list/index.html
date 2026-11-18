@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily To-Do & Backlog</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <main class="tool-workspace">
+        <div class="fluid-grid">
+            
+            <!-- Left / Top Panel: Active Date List & Task Creation -->
+            <div class="panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: var(--spacing-md);">
+                    <h2 id="view-date-title" style="margin: 0;">Today's List</h2>
+                    <button id="notify-perm-btn" class="btn" style="width: auto; padding: 0.3rem 0.7rem; font-size: 0.8rem; display: none;">🔔 Enable Alerts</button>
+                </div>
+
+                <!-- Date Navigation Bar -->
+                <div style="display: flex; gap: 0.4rem; align-items: center; margin-bottom: var(--spacing-md); background: var(--bg-input); padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--border-color);">
+                    <button type="button" id="prev-day-btn" class="btn" style="width: auto; padding: 0.4rem 0.7rem;" title="Previous Day">◀</button>
+                    <input type="date" id="date-picker" style="flex: 1; border: none; background: transparent; text-align: center; font-weight: 600; cursor: pointer;">
+                    <button type="button" id="next-day-btn" class="btn" style="width: auto; padding: 0.4rem 0.7rem;" title="Next Day">▶</button>
+                    <button type="button" id="today-btn" class="btn" style="width: auto; padding: 0.4rem 0.75rem; font-size: 0.85rem;">Today</button>
+                </div>
+
+                <!-- Add New Task Form -->
+                <form id="todo-form" style="margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--border-color);">
+                    <div class="form-group">
+                        <label for="task-text">New Task</label>
+                        <input type="text" id="task-text" required placeholder="What needs to get done?">
+                    </div>
+
+                    <div style="display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap;">
+                        <div class="form-group" style="flex: 1; min-width: 140px; margin-bottom: 0;">
+                            <label for="task-time">Reminder Time (Optional)</label>
+                            <input type="time" id="task-time">
+                        </div>
+                        <button type="submit" class="btn" style="flex: 1; min-width: 140px;">+ Add to Day</button>
+                    </div>
+                </form>
+
+                <!-- Active Date Tasks Container -->
+                <div id="daily-tasks-container" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+            </div>
+
+            <!-- Right / Bottom Panel: Missed & Uncompleted Backlog -->
+            <div class="panel">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem;">
+                    <h2 style="margin: 0;">Missed Backlog</h2>
+                    <span id="backlog-count" style="font-size: 0.85rem; font-weight: 600; color: var(--brand-primary);"></span>
+                </div>
+                <p style="font-size: 0.85rem; margin-top: 0; margin-bottom: var(--spacing-md);">
+                    Uncompleted items from previous days stay in their original day's log until you complete, push, or delete them.
+                </p>
+                
+                <div id="backlog-container" style="display: flex; flex-direction: column; gap: 1.25rem;"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../app.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
