@@ -12,6 +12,12 @@
         "description": "Instantly fill boilerplate responses using variables powered by a spreadsheet."
     },
     {
+        "id": "todo-list",
+        "title": "Daily To-Do & Backlog",
+        "path": "todo-list/index.html",
+        "description": "Day-by-day task lists with deadline alerts, next-work-day rollover buttons, and a missed task backlog."
+    },
+    {
         "id": "example-tool",
         "title": "Example Card Tool",
         "path": "#",
